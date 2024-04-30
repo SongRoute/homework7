@@ -10,6 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<ctype.h>
 
 /* 필요한 헤더파일 추가 */
 
@@ -198,12 +199,23 @@ int insertNode(headNode* h, int key) {
  * list에 key에 대한 노드하나를 추가
  */
 int insertLast(headNode* h, int key) {
-
     listNode* node = (listNode*)malloc(sizeof(listNode)); // 새로운 노드 생성
     node->key = key; // 새로운 노드에 key값 저장
     node->link = NULL;	// 새로운 노드의 link는 NULL
 
-	return 0;
+    if (h->first == NULL) {
+        // 리스트가 비어있는 경우, 새 노드를 첫 번째 노드로 설정
+        h->first = node;
+    } else {
+        // 리스트가 비어있지 않은 경우, 마지막 노드를 찾아 새 노드를 연결
+        listNode* temp = h->first;
+        while (temp->link != NULL) {
+            temp = temp->link;
+        }
+        temp->link = node;
+    }
+
+    return 0;
 }
 
 
